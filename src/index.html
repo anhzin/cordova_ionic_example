@@ -10,9 +10,20 @@
   <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4e8ef7">
-  
+  <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+  <script>
+  // Initialize Firebase
+  var config = {
+   apiKey: "AIzaSyAlM0WvAwHAqryg196q98QvGrpfRIKQ9WY",
+      authDomain: "booking-repair-car.firebaseapp.com",
+      databaseURL: "https://booking-repair-car.firebaseio.com",
+      storageBucket: "booking-repair-car.appspot.com",
+      messagingSenderId: "915775141729"
+  };
+  firebase.initializeApp(config);
+</script>
   <!-- cordova.js required for cordova apps -->
- <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCJP7gy4AQsjECNGos53VZG8_QCwwua7BM&sensor=true&libraries=geometry,places"></script>
+ <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAkM4p5zLlOKC4nd7hU6ABXBA-WhBc6BFA&sensor=true&libraries=geometry,places"></script>
   <script src="cordova.js"></script>
   
   <!-- un-comment this code to enable service worker

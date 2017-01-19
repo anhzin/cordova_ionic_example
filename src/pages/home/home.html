@@ -3,19 +3,22 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-    <div class="item-input-wrapper">
-        <i class="icon ion-ios7-search placeholder-icon"></i>
-        <!--<input id="startInput" type="text" (click)='openStart()' [(ngModel)]="startInput" placeholder="Start"/>
+        <div class="item-input-wrapper">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <ion-buttons end>
+                <button ion-button icon-only (click)="logOut()">
+                    <ion-icon name="log-out"></ion-icon>
+                </button>
+            </ion-buttons>
+            <!--<input id="startInput" type="text" (click)='openStart()' [(ngModel)]="startInput" placeholder="Start"/>
         <input id="endInput" type="text" (click)='openEnd()' [(ngModel)]="endInput" placeholder="Target"/>-->
-    </div>
-    
+        </div>
     </ion-navbar>
 </ion-header>
-
 <div class="bar bar-header">
-  <button class="button button-icon icon ion-navicon"></button>
-  <div class="h1 title">Header Buttons</div>
-  <button class="button button-clear button-positive">Edit</button>
+    <button class="button button-icon icon ion-navicon"></button>
+    <div class="h1 title">Header Buttons</div>
+    <button class="button button-clear button-positive">Edit</button>
 </div>
 <ion-content>
     <div id="map"></div>

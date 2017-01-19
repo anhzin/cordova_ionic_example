@@ -1,8 +1,13 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
+import { AuthData } from '../providers/auth-data';
+
+import firebase from 'firebase';
+
 
 declare var google;
 var directionsService;
@@ -12,17 +17,38 @@ var service;
   templateUrl: 'app.html'
 })
 export class MyApp {
-    
-    @ViewChild(Nav) nav: Nav;
-    public rootPage = HomePage;
+  zone: NgZone;
+  @ViewChild(Nav) nav: Nav;
+  public rootPage: any;
 
-    pages: any;
+  pages: any;
 
   constructor(platform: Platform, public events: Events) {
+
+    firebase.initializeApp({
+      apiKey: "AIzaSyAlM0WvAwHAqryg196q98QvGrpfRIKQ9WY",
+      authDomain: "booking-repair-car.firebaseapp.com",
+      databaseURL: "https://booking-repair-car.firebaseio.com",
+      storageBucket: "booking-repair-car.appspot.com",
+      messagingSenderId: "915775141729"
+    });
+
     this.pages = [
-        "page 1",
-        "page 2"
-     ];
+      "page 1",
+      "page 2"
+    ];
+    this.zone = new NgZone({});
+    firebase.auth().onAuthStateChanged((user) => {
+      this.zone.run(() => {
+        if (!user) {
+           console.log('onAuthStateChanged LoginPage' );
+          this.rootPage = LoginPage;
+        } else {
+          console.log('onAuthStateChanged LoginPage' );
+          this.rootPage = HomePage;
+        }
+      });
+    });
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -30,11 +56,11 @@ export class MyApp {
       Splashscreen.hide();
     });
   }
-  menuOpened(){
-      this.events.publish('menu:opened');
+  menuOpened() {
+    this.events.publish('menu:opened');
   }
 
-  menuClosed(){
-      this.events.publish('menu:closed');
+  menuClosed() {
+    this.events.publish('menu:closed');
   }
 }
