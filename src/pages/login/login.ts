@@ -6,6 +6,7 @@ import {
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
+import { FakeData } from '../../providers/fake-data';
 import { SignupPage } from '../signup/signup';
 import { HomePage } from '../home/home';
 import { ResetPasswordPage } from '../reset-password/reset-password';
@@ -21,15 +22,9 @@ export class LoginPage {
   submitAttempt: boolean = false;
   loading: any;
 
-  constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
+  constructor(public nav: NavController, public authData: AuthData, public fakeData: FakeData, public formBuilder: FormBuilder,
     public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 
-    /**
-     * Creates a ControlGroup that declares the fields available, their values and the validators that they are going
-     * to be using.
-     *
-     * I set the password's min length to 6 characters because that's Firebase's default, feel free to change that.
-     */
     this.loginForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
@@ -59,23 +54,12 @@ export class LoginPage {
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then(authData => {
         console.log('loginUser loginUser');
+        //  this.fakeData.generateDataForWorkShop();
+        //this.fakeData.getWorkshopDetail(0);
         //this.nav.setRoot(HomePage);
       }, error => {
         this.loading.dismiss().then(() => {
-          //           {
-          //  "error": {
-          //   "errors": [
-          //    {
-          //     "domain": "global",
-          //     "reason": "invalid",
-          //     "message": "EMAIL_NOT_FOUND"
-          //    }
-          //   ],
-          //   "code": 400,
-          //   "message": "EMAIL_NOT_FOUND"
-          //  }
-          // }
-
+          
           var errorCode: any;
           let errorMessage: any;
           

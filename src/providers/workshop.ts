@@ -3,16 +3,16 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
-  Generated class for the Login provider.
+  Generated class for the Workshop provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class Login {
+export class Workshop {
 
   constructor(public http: Http) {
-    console.log('Hello Login Provider');
+    console.log('Hello Workshop Provider');
   }
 
 }

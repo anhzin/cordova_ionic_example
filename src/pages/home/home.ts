@@ -3,7 +3,10 @@ import { Http } from '@angular/http';
 import { NavController, ModalController, NavParams, Events } from 'ionic-angular';
 import { SearchListPage } from '../search-list/search-list';
 import { AuthData } from '../../providers/auth-data';
-import {LoginPage} from '../login/login'; 
+import { FakeData } from '../../providers/fake-data';
+import { LoginPage } from '../login/login';
+import * as _ from 'lodash';
+
 import {
     Camera,
     ImagePicker,
@@ -12,7 +15,8 @@ import {
     GoogleMapsLatLng,
     CameraPosition,
     GoogleMapsMarkerOptions,
-    GoogleMapsMarker
+    GoogleMapsMarker,
+    Geolocation
 } from 'ionic-native';
 
 declare var google;
@@ -30,8 +34,13 @@ export class HomePage {
     startInputModel: any;
     endInputModel: any;
     public base64Image: string;
+    arrayWorkshops: any;
+    @ViewChild('map') mapElement: ElementRef;
     map: any;
-    constructor(public navCtrl: NavController, params: NavParams, public http: Http, public events: Events, public authData: AuthData) {
+    public workshopRef: any;
+
+    constructor(public navCtrl: NavController, params: NavParams, public http: Http, public events: Events,
+        public authData: AuthData, public fakeData: FakeData) {
         this.styleIndex = 0;
         this.styles = [
             "http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_gray.png",
@@ -39,15 +48,26 @@ export class HomePage {
         ];
         var that = this;
         this.events.subscribe('menu:opened', () => {
-            that.map.setClickable(false);
+            if (that.map != null && that.map != undefined) {
+                that.map.setClickable(false);
+            }
+
         });
         this.events.subscribe('menu:closed', () => {
-            that.map.setClickable(true);
+            if (that.map != null && that.map != undefined) {
+                that.map.setClickable(true);
+            }
         });
+
+        this.workshopRef = firebase.database().ref('/workshops');
     }
 
     ionViewDidLoad() {
+        this.fakeData.initGeoFireForDatabase();
+        //    this.fakeData.getAllWorkshop();
         this.loadMap();
+
+
     }
 
     get startInput() {
@@ -228,39 +248,76 @@ export class HomePage {
         });
     }
 
-    initMap() {
-        let latLng: GoogleMapsLatLng = new GoogleMapsLatLng(43.0741904, -89.3809802);
+    initMap(latLng) {
+        //   let latLng: GoogleMapsLatLng = new GoogleMapsLatLng(43.0741904, -89.3809802);
         let position: CameraPosition = {
             target: latLng,
-            zoom: 15
+            zoom: 14
         };
         this.map.moveCamera(position);
         var evtName = GoogleMapsEvent.MAP_LONG_CLICK;
         var that = this;
-        this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe((pos) => {
-            let markerOptions: GoogleMapsMarkerOptions = {
-                position: pos,
-                title: "just clicked",
-                icon: {
-                    'url': that.styles[that.styleIndex]
-                }
-            };
-            that.map.addMarker(markerOptions)
-                .then((marker: GoogleMapsMarker) => {
-                    marker.showInfoWindow();
-                });
-        });
+        let markerOptions: GoogleMapsMarkerOptions = {
+            position: latLng,
+
+            icon: {
+                'url': that.styles[that.styleIndex]
+            }
+        };
+        that.map.addMarker(markerOptions)
+            .then((marker: GoogleMapsMarker) => {
+                marker.showInfoWindow();
+            });
+        // this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe((pos) => {
+        //     let markerOptions: GoogleMapsMarkerOptions = {
+        //         position: pos,
+        //         title: "just clicked",
+        //         icon: {
+        //             'url': that.styles[that.styleIndex]
+        //         }
+        //     };
+        //     that.map.addMarker(markerOptions)
+        //         .then((marker: GoogleMapsMarker) => {
+        //             marker.showInfoWindow();
+        //         });
+        // });
     }
 
     loadMap() {
         var that = this;
         document.addEventListener("deviceready", function () {
-            let latLng: GoogleMapsLatLng = new GoogleMapsLatLng(43.0741904, -89.3809802);
-            let element: HTMLElement = document.getElementById('map');
-            that.map = new GoogleMap(element);
-            that.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
-                that.initMap();
+            // Geolocation.getCurrentPosition({ enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }).then(position => {
+            //     let latLng = new GoogleMapsLatLng(position.coords.latitude, position.coords.longitude);
+
+            //     console.log("getCurrentPosition " + latLng);
+            // }, (err) => {
+            //     console.log(err);
+            // });
+
+            Geolocation.getCurrentPosition().then((position) => {
+
+                //    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                let latLng: GoogleMapsLatLng = new GoogleMapsLatLng(position.coords.latitude, position.coords.longitude);
+                console.log("getCurrentPosition11 " + latLng);
+                let mapOptions = {
+                    center: latLng,
+                    zoom: 14,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+
+                let element: HTMLElement = document.getElementById('map');
+                that.map = new GoogleMap(element, mapOptions);
+                that.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
+                    that.initMap(latLng);
+
+                    that.getAllWorkshop();
+                });
+
+            }, (err) => {
+                console.log('Error getting location', err);
             });
+            //=====
+
         });
 
     }
@@ -269,6 +326,51 @@ export class HomePage {
         this.authData.logoutUser().then(() => {
             this.navCtrl.setRoot(LoginPage);
         });
+    }
+
+    getAllWorkshop() {
+        let self = this;
+        let arrayWorkshop: any;
+        this.workshopRef.on("value", function (snapshot) {
+            // arrayWorkshop.push(snapshot);
+            console.log("getAllWorkshop " + snapshot);
+            self.arrayWorkshops = snapshot.val();
+            self.addMarkerWorkshop(snapshot.val());
+            // _.forEach(self.arrayWorkshops, function (value) {
+
+            //     console.log("arrayWorkshops " + value);
+            // });
+            return snapshot;
+        });
+    }
+
+    addMarkerWorkshop(workshops) {
+        var evtName = GoogleMapsEvent.MAP_LONG_CLICK;
+        var that = this;
+        //console.log("arrayWorkshops " + workshops);
+        if (workshops != undefined && workshops != null) {
+            _.forEach(workshops, function (value) {
+                let latitude: any;
+                latitude = value["latitude"];
+                let longitude: any;
+                longitude = value["longitude"];
+                if (latitude != null && latitude != undefined && longitude != null && longitude != undefined) {
+                    let latLng: GoogleMapsLatLng = new GoogleMapsLatLng(latitude, longitude);
+                    let markerOptions: GoogleMapsMarkerOptions = {
+                        position: latLng,
+
+                        icon: {
+                            'url': that.styles[that.styleIndex]
+                        }
+                    };
+                    that.map.addMarker(markerOptions)
+                        .then((marker: GoogleMapsMarker) => {
+                            marker.showInfoWindow();
+                        });
+                }
+                // console.log("arrayWorkshops " + value);
+            });
+        }
     }
 
 }

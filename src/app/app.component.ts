@@ -5,6 +5,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { AuthData } from '../providers/auth-data';
+import { FakeData } from '../providers/fake-data';
 
 import firebase from 'firebase';
 

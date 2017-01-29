@@ -9,8 +9,11 @@ import { SignupPage} from '../pages/signup/signup';
 import { ResetPasswordPage} from '../pages/reset-password/reset-password';
 import { SearchListPage} from '../pages/search-list/search-list';
 import { AuthData } from '../providers/auth-data';
+import { FakeData } from '../providers/fake-data';
+
 const Services = [
-  AuthData
+  AuthData,
+  FakeData
 ];
 @NgModule({
   declarations: [
