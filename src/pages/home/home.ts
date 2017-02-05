@@ -1,10 +1,13 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Http } from '@angular/http';
-import { NavController, ModalController, NavParams, Events } from 'ionic-angular';
+import { NavController, ModalController, NavParams, Events, PopoverController, LoadingController } from 'ionic-angular';
 import { SearchListPage } from '../search-list/search-list';
 import { AuthData } from '../../providers/auth-data';
 import { FakeData } from '../../providers/fake-data';
 import { LoginPage } from '../login/login';
+import { WorkshopDetailPage } from '../workshops/workshop-detail/workshop-detail';
+
+import * as GeoFire from "geofire";
 import * as _ from 'lodash';
 
 import {
@@ -35,12 +38,16 @@ export class HomePage {
     endInputModel: any;
     public base64Image: string;
     arrayWorkshops: any;
+    modalOptions;
+    showResultSearch: boolean;
+    workshopsNearby: any;
+    nearbys: any;
     @ViewChild('map') mapElement: ElementRef;
     map: any;
     public workshopRef: any;
-
+    public geoRef: any;
     constructor(public navCtrl: NavController, params: NavParams, public http: Http, public events: Events,
-        public authData: AuthData, public fakeData: FakeData) {
+        public authData: AuthData, public fakeData: FakeData, private modalCtrl: ModalController, public loadingCtrl: LoadingController) {
         this.styleIndex = 0;
         this.styles = [
             "http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_gray.png",
@@ -60,14 +67,16 @@ export class HomePage {
         });
 
         this.workshopRef = firebase.database().ref('/workshops');
+        this.geoRef = firebase.database().ref('/geofire');
+        //  this.findNearBy();
     }
 
     ionViewDidLoad() {
-        this.fakeData.initGeoFireForDatabase();
+        //this.fakeData.initGeoFireForDatabase();
         //    this.fakeData.getAllWorkshop();
         this.loadMap();
 
-
+        this.showResultSearch = false;
     }
 
     get startInput() {
@@ -249,7 +258,6 @@ export class HomePage {
     }
 
     initMap(latLng) {
-        //   let latLng: GoogleMapsLatLng = new GoogleMapsLatLng(43.0741904, -89.3809802);
         let position: CameraPosition = {
             target: latLng,
             zoom: 14
@@ -258,45 +266,20 @@ export class HomePage {
         var evtName = GoogleMapsEvent.MAP_LONG_CLICK;
         var that = this;
         let markerOptions: GoogleMapsMarkerOptions = {
-            position: latLng,
-
-            icon: {
-                'url': that.styles[that.styleIndex]
-            }
+            position: latLng
         };
         that.map.addMarker(markerOptions)
             .then((marker: GoogleMapsMarker) => {
                 marker.showInfoWindow();
             });
-        // this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe((pos) => {
-        //     let markerOptions: GoogleMapsMarkerOptions = {
-        //         position: pos,
-        //         title: "just clicked",
-        //         icon: {
-        //             'url': that.styles[that.styleIndex]
-        //         }
-        //     };
-        //     that.map.addMarker(markerOptions)
-        //         .then((marker: GoogleMapsMarker) => {
-        //             marker.showInfoWindow();
-        //         });
-        // });
     }
 
     loadMap() {
         var that = this;
         document.addEventListener("deviceready", function () {
-            // Geolocation.getCurrentPosition({ enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }).then(position => {
-            //     let latLng = new GoogleMapsLatLng(position.coords.latitude, position.coords.longitude);
-
-            //     console.log("getCurrentPosition " + latLng);
-            // }, (err) => {
-            //     console.log(err);
-            // });
 
             Geolocation.getCurrentPosition().then((position) => {
 
-                //    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 let latLng: GoogleMapsLatLng = new GoogleMapsLatLng(position.coords.latitude, position.coords.longitude);
                 console.log("getCurrentPosition11 " + latLng);
                 let mapOptions = {
@@ -316,7 +299,6 @@ export class HomePage {
             }, (err) => {
                 console.log('Error getting location', err);
             });
-            //=====
 
         });
 
@@ -332,14 +314,9 @@ export class HomePage {
         let self = this;
         let arrayWorkshop: any;
         this.workshopRef.on("value", function (snapshot) {
-            // arrayWorkshop.push(snapshot);
             console.log("getAllWorkshop " + snapshot);
             self.arrayWorkshops = snapshot.val();
             self.addMarkerWorkshop(snapshot.val());
-            // _.forEach(self.arrayWorkshops, function (value) {
-
-            //     console.log("arrayWorkshops " + value);
-            // });
             return snapshot;
         });
     }
@@ -354,23 +331,111 @@ export class HomePage {
                 latitude = value["latitude"];
                 let longitude: any;
                 longitude = value["longitude"];
+                let name = value["name"];
                 if (latitude != null && latitude != undefined && longitude != null && longitude != undefined) {
                     let latLng: GoogleMapsLatLng = new GoogleMapsLatLng(latitude, longitude);
                     let markerOptions: GoogleMapsMarkerOptions = {
                         position: latLng,
-
+                        title: name,
+                        snippet: "Address: " + value["address"],
                         icon: {
                             'url': that.styles[that.styleIndex]
-                        }
+                        },
+
                     };
-                    that.map.addMarker(markerOptions)
-                        .then((marker: GoogleMapsMarker) => {
-                            marker.showInfoWindow();
-                        });
+                    var infowindow = new google.maps.InfoWindow({
+                        content: '<h4>You are here</h4><button onclick="myFunction()">Click me!</button>'
+                    });
+
+                    that.map.addMarker(markerOptions).then(
+                        (marker: GoogleMapsMarker) => {
+
+                            marker.addEventListener(GoogleMapsEvent.INFO_CLICK).subscribe(
+                                (data) => {
+                                    console.log("addMarker");
+
+                                    console.log("You clicked " + marker.getTitle());
+                                    console.log(" id workshop " + value["id"]);
+                                    that.presentPopover(value["id"]);
+                                    //infowindow.open(that.map, marker);
+                                }
+                            );
+                        }
+                    );
+
+
                 }
                 // console.log("arrayWorkshops " + value);
             });
         }
     }
+    presentPopover(id) {
+        this.navCtrl.push(WorkshopDetailPage, { idWorkshop: id });
+    }
+    presentLoading() {
+        let loader = this.loadingCtrl.create({
+            content: "Please wait...",
+            duration: 5000
+        });
+        loader.present();
+    }
+    findNearBy() {
+        let self = this;
+        self.nearbys = [];
+        this.presentLoading();
+        Geolocation.getCurrentPosition().then((position) => {
+            var geoFire = new GeoFire(this.geoRef);
+            var location = [position.coords.latitude, position.coords.longitude];
+            // var distance = 200 * 1.609344; // mile to km
+            var distance = 300 / 1.609344; // km to mile
+            var geoQuery = geoFire.query({
+                center: location,
+                radius: distance
+            });
+            let arrayWorkshop = [];
+            // geoQuery.on("key_entered", function (id, location) {
+            //     console.log("Found a garage: " + id);
+            // });
+            var onReadyRegistration = geoQuery.on("ready", function () {
+                self.showResultSearch = true;
+                console.log("GeoQuery has loaded and fired all other events for initial data");
+                // _.sortBy(arrayWorkshop, 'location').take(3);
+                let arrayWorkshopSort = _.sortBy(arrayWorkshop, [function (o) { return o.location; }]);
+                console.log(arrayWorkshopSort);
+                for (let i = 0; i < arrayWorkshopSort.length; i++) {
+                    self.workshopRef.child(arrayWorkshopSort[i].id).on("value", function (snapshot) {
+                        if (snapshot != null) {
+                            let workshop = snapshot.val();
+                            workshop.location = Math.round(arrayWorkshopSort[i].location);
+                            self.nearbys.push(workshop);
+                        }
+                        console.log("findNearBy idWorkshop snapshot.val()  " + snapshot.val());
 
+                    });
+
+                }
+
+            });
+
+            var onKeyEnteredRegistration = geoQuery.on("key_entered", function (id, key, location, distance) {
+                console.log("id: " + id + " key: " + key + " entered query at " + location + " (" + distance + " km from center)");
+                let workshopLocation = {
+                    id: id,
+                    key: key,
+                    location: location
+                }
+                arrayWorkshop.push(workshopLocation);
+                self.showResultSearch = true;
+
+            });
+
+            var onKeyExitedRegistration = geoQuery.on("key_exited", function (key, location, distance) {
+                console.log(key + " exited query to " + location + " (" + distance + " km from center)");
+            });
+
+            var onKeyMovedRegistration = geoQuery.on("key_moved", function (key, location, distance) {
+                console.log(key + " moved within query to " + location + " (" + distance + " km from center)");
+            });
+        });
+    }
 }

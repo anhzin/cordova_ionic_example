@@ -54,7 +54,7 @@ export class LoginPage {
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then(authData => {
         console.log('loginUser loginUser');
-        //  this.fakeData.generateDataForWorkShop();
+       //  this.fakeData.generateDataForWorkShop();
         //this.fakeData.getWorkshopDetail(0);
         //this.nav.setRoot(HomePage);
       }, error => {

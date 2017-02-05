@@ -5,9 +5,15 @@
         </button>
         <div class="item-input-wrapper">
             <i class="icon ion-ios7-search placeholder-icon"></i>
-            <ion-buttons end>
+            <!--<ion-buttons end>
                 <button ion-button icon-only (click)="logOut()">
                     <ion-icon name="log-out"></ion-icon>
+                </button>
+            </ion-buttons>-->
+            <ion-buttons end>
+                <button ion-button icon-only (click)="findNearBy()">
+                    <!--<ion-icon name="search()"></ion-icon>-->
+                    Nearby
                 </button>
             </ion-buttons>
             <!--<input id="startInput" type="text" (click)='openStart()' [(ngModel)]="startInput" placeholder="Start"/>
@@ -21,5 +27,22 @@
     <button class="button button-clear button-positive">Edit</button>
 </div>
 <ion-content>
+    <!--<ion-tabs class="tabs-icon" >
+         <ion-tab tabIcon="water" tabTitle="Nearby" [root]="tabNearBy"></ion-tab>
+          <ion-tab tabIcon="heart" tabTitle="Favorite" [root]="tabFavorite"></ion-tab>
+    </ion-tabs>-->
+    <div *ngIf="showResultSearch == true" id="nearBy">
+        <ion-list>
+            <ion-item *ngFor="let item of nearbys" (click)="presentPopover(item.id)">
+                <ion-row>
+                    <ion-col width-60>{{ item.name }}</ion-col>
+                    <ion-col width-40> at {{ item.location}} km</ion-col>
+                </ion-row>
+            </ion-item>
+        </ion-list>
+    </div>
+    <!--<div *ngIf="showResultSearch == false">
+        <div id="map"></div>
+    </div>-->
     <div id="map"></div>
 </ion-content>

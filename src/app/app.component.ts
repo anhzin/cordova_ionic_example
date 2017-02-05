@@ -4,6 +4,9 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { HistoryBookingPage } from '../pages/history-booking/history-booking';
+
+
 import { AuthData } from '../providers/auth-data';
 import { FakeData } from '../providers/fake-data';
 
@@ -35,17 +38,19 @@ export class MyApp {
     });
 
     this.pages = [
-      "page 1",
-      "page 2"
+      // "Profile",
+      "Home",
+      "History",
+      "Logout"
     ];
     this.zone = new NgZone({});
     firebase.auth().onAuthStateChanged((user) => {
       this.zone.run(() => {
         if (!user) {
-           console.log('onAuthStateChanged LoginPage' );
+          console.log('onAuthStateChanged LoginPage');
           this.rootPage = LoginPage;
         } else {
-          console.log('onAuthStateChanged LoginPage' );
+          console.log('onAuthStateChanged LoginPage');
           this.rootPage = HomePage;
         }
       });
@@ -63,5 +68,14 @@ export class MyApp {
 
   menuClosed() {
     this.events.publish('menu:closed');
+  }
+
+  callHistory(item) {
+    console.log("============ callHistory" + item);
+    if (item === "History") {
+      this.rootPage = HistoryBookingPage;
+    }else if(item ==="Home"){
+      this.rootPage = HomePage;
+    }
   }
 }

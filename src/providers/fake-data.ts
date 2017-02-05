@@ -35,52 +35,52 @@ export class FakeData {
         "longitude": 108.221023,
         "description": "New workshops had a coupond",
         "status": 0,
-        "operatingTime":
-        {
-          "monday":
+         "operatingTime":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -94,7 +94,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -131,51 +130,51 @@ export class FakeData {
         "description": "New workshops had a coupond",
         "status": 0,
         "operatingTime":
-        {
-          "monday":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -189,7 +188,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -225,52 +223,52 @@ export class FakeData {
         "longitude": 108.237622,
         "description": "New workshops had a coupond",
         "status": 0,
-        "operatingTime":
-        {
-          "monday":
+         "operatingTime":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -284,7 +282,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -319,52 +316,52 @@ export class FakeData {
         "longitude": 108.246649,
         "description": "New workshops had a coupond",
         "status": 0,
-        "operatingTime":
-        {
-          "monday":
+         "operatingTime":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -378,7 +375,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -414,51 +410,51 @@ export class FakeData {
         "description": "New workshops had a coupond",
         "status": 0,
         "operatingTime":
-        {
-          "monday":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -472,7 +468,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -508,51 +503,51 @@ export class FakeData {
         "description": "New workshops had a coupond",
         "status": 0,
         "operatingTime":
-        {
-          "monday":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -566,7 +561,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -601,52 +595,52 @@ export class FakeData {
         "longitude": 105.847103,
         "description": "New workshops had a coupond",
         "status": 0,
-        "operatingTime":
-        {
-          "monday":
+         "operatingTime":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -660,7 +654,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -696,52 +689,52 @@ export class FakeData {
         "longitude": 105.833587,
         "description": "New workshops had a coupond",
         "status": 0,
-        "operatingTime":
-        {
-          "monday":
+         "operatingTime":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -755,7 +748,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -791,52 +783,52 @@ export class FakeData {
         "longitude": 105.833980,
         "description": "New workshops had a coupond",
         "status": 0,
-        "operatingTime":
-        {
-          "monday":
+         "operatingTime":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -850,7 +842,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -886,52 +877,52 @@ export class FakeData {
         "longitude": 105.848112,
         "description": "New workshops had a coupond",
         "status": 0,
-        "operatingTime":
-        {
-          "monday":
+         "operatingTime":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -945,7 +936,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -982,51 +972,51 @@ export class FakeData {
         "description": "New workshops had a coupond",
         "status": 0,
         "operatingTime":
-        {
-          "monday":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -1040,7 +1030,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",
@@ -1076,52 +1065,52 @@ export class FakeData {
         "longitude": 105.795556,
         "description": "New workshops had a coupond",
         "status": 0,
-        "operatingTime":
-        {
-          "monday":
+         "operatingTime":
+        [
           {
+            "name": "Monday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "tuesday":
           {
+            "name": "Tuesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "wesnesday":
           {
+            "name": "Wesnesday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "thursday":
           {
+            "name": "Thursday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "friday":
           {
+
+            "name": "Friday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "saturday":
           {
+            "name": "Saturday",
             "isOpen": true,
             "timeOpen": "08:00",
             "timeClose": "18:00"
           },
-          "sunday":
           {
+            "name": "Sunday",
             "isOpen": false,
             "timeOpen": "08:00",
             "timeClose": "18:00"
-          },
-
-        },
+          }
+        ],
         "services": [
           {
             "id": 0,
@@ -1135,7 +1124,6 @@ export class FakeData {
             "duration": -1
 
           },
-          ,
           {
             "id": 2,
             "name": "Bảo Dưỡng Nhanh",

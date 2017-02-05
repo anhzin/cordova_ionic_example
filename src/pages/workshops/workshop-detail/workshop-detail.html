@@ -1,0 +1,102 @@
+<!--
+  Generated template for the WorkshopDetail page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Workshop Detail</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="callBooking()">
+                   Book
+                </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding overflow-scroll='true'>
+  <!--<scroll-content>-->
+  <ion-scroll scrollY="true" style="width:100vw;height:100vh">
+    <div *ngIf="workshop">
+      <ion-row>
+        <ion-col width-30>
+          <strong>
+        Name:
+      </strong>
+        </ion-col>
+        <ion-col width-70>
+          {{workshop.name}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col width-30>
+          <strong>
+          Address:
+        </strong>
+        </ion-col>
+        <ion-col width-70>
+          {{workshop.address}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col width-30>
+          <strong>
+          Description:
+        </strong>
+        </ion-col>
+        <ion-col width-70>
+          {{workshop.description}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col width-30>
+          <strong>
+          Operating:
+        </strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col width-10>
+        </ion-col>
+        <ion-col width-90>
+          <div>
+            <ion-list>
+              <!--Begin item-->
+              <ion-row *ngFor="let item of operatingTime;" responsive-sm>
+                <ion-col *ngIf="item.isOpen">
+                  <strong>{{item.name}}</strong>: {{item.timeOpen}}-{{item.timeClose}} 
+                </ion-col>
+                <ion-col *ngIf="!item.isOpen">
+                  <strong>{{item.name}}</strong>: OFF 
+                </ion-col>
+              </ion-row>
+              <!--End Item-->
+            </ion-list>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col width-30>
+          <strong>
+          Service:
+        </strong>
+        </ion-col>
+        <ion-col width-70>
+          <!--Begin item-->
+          <ion-row *ngFor="let item of services;" responsive-sm>
+            <ion-col>
+              {{item.name}}
+            </ion-col>
+          </ion-row>
+          <!--<ion-item>
+            <ion-select class="max" multiple="true">
+              <ion-option *ngFor="let item of services" value="{{item.name}}">{{item.name}}</ion-option>
+            </ion-select>
+          </ion-item>-->
+          <!--End Item-->
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-scroll>
+  <!--</scroll-content>-->
+</ion-content>
