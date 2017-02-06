@@ -71,11 +71,15 @@ export class MyApp {
   }
 
   callHistory(item) {
-    console.log("============ callHistory" + item);
+    console.log("============ callHistory   " + item);
     if (item === "History") {
       this.rootPage = HistoryBookingPage;
     }else if(item ==="Home"){
+     // this.rootPage.remove(HomePage);
+   
       this.rootPage = HomePage;
+    }else{
+       this.rootPage = LoginPage;
     }
   }
 }

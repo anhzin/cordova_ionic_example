@@ -9,6 +9,7 @@ import { WorkshopDetailPage } from '../workshops/workshop-detail/workshop-detail
 
 import * as GeoFire from "geofire";
 import * as _ from 'lodash';
+//import { LocationAccuracy } from 'ionic-native';
 
 import {
     Camera,
@@ -68,12 +69,29 @@ export class HomePage {
 
         this.workshopRef = firebase.database().ref('/workshops');
         this.geoRef = firebase.database().ref('/geofire');
+
+        console.log("HOME constructor");
         //  this.findNearBy();
     }
 
     ionViewDidLoad() {
         //this.fakeData.initGeoFireForDatabase();
         //    this.fakeData.getAllWorkshop();
+        console.log("HOME ionViewDidLoad");
+
+        // LocationAccuracy.canRequest().then((canRequest: boolean) => {
+
+        //     if (canRequest) {
+        //         // the accuracy option will be ignored by iOS
+        //         LocationAccuracy.request(LocationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+        //             () => console.log('Request successful'),
+        //             error => console.log('Error requesting location permissions', error)
+        //         );
+        //     }
+
+        // });
+
+
         this.loadMap();
 
         this.showResultSearch = false;
@@ -272,14 +290,17 @@ export class HomePage {
             .then((marker: GoogleMapsMarker) => {
                 marker.showInfoWindow();
             });
+
+
     }
 
     loadMap() {
         var that = this;
         document.addEventListener("deviceready", function () {
+            console.log("deviceready  ");
 
-            Geolocation.getCurrentPosition().then((position) => {
-
+            var onSuccess = function (position) {
+                console.log("getCurrentPosition  ");
                 let latLng: GoogleMapsLatLng = new GoogleMapsLatLng(position.coords.latitude, position.coords.longitude);
                 console.log("getCurrentPosition11 " + latLng);
                 let mapOptions = {
@@ -295,10 +316,20 @@ export class HomePage {
 
                     that.getAllWorkshop();
                 });
+            };
 
-            }, (err) => {
-                console.log('Error getting location', err);
-            });
+            // onError Callback receives a PositionError object
+            //
+            function onError(error) {
+                console.log("onError " + error);
+                alert('code: ' + error.code + '\n' +
+                    'message: ' + error.message + '\n');
+            }
+
+           navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+
+           // Geolocation.getCurrentPosition(onSuccess, onError);
 
         });
 
@@ -381,61 +412,62 @@ export class HomePage {
     }
     findNearBy() {
         let self = this;
-        self.nearbys = [];
-        this.presentLoading();
-        Geolocation.getCurrentPosition().then((position) => {
-            var geoFire = new GeoFire(this.geoRef);
-            var location = [position.coords.latitude, position.coords.longitude];
-            // var distance = 200 * 1.609344; // mile to km
-            var distance = 300 / 1.609344; // km to mile
-            var geoQuery = geoFire.query({
-                center: location,
-                radius: distance
-            });
+        if (!self.showResultSearch) {
+            self.nearbys = [];
             let arrayWorkshop = [];
-            // geoQuery.on("key_entered", function (id, location) {
-            //     console.log("Found a garage: " + id);
-            // });
-            var onReadyRegistration = geoQuery.on("ready", function () {
-                self.showResultSearch = true;
-                console.log("GeoQuery has loaded and fired all other events for initial data");
-                // _.sortBy(arrayWorkshop, 'location').take(3);
-                let arrayWorkshopSort = _.sortBy(arrayWorkshop, [function (o) { return o.location; }]);
-                console.log(arrayWorkshopSort);
-                for (let i = 0; i < arrayWorkshopSort.length; i++) {
-                    self.workshopRef.child(arrayWorkshopSort[i].id).on("value", function (snapshot) {
+            this.presentLoading();
+            Geolocation.getCurrentPosition().then((position) => {
+                var geoFire = new GeoFire(this.geoRef);
+                var location = [position.coords.latitude, position.coords.longitude];
+                // var distance = 200 * 1.609344; // mile to km
+                var distance = 300 / 1.609344; // km to mile
+                var geoQuery = geoFire.query({
+                    center: location,
+                    radius: distance
+                });
+
+                var onReadyRegistration = geoQuery.on("ready", function () {
+                    self.showResultSearch = true;
+                    console.log("findNearBy ready");
+                    console.log("GeoQuery has loaded and fired all other events for initial data");
+                    // _.sortBy(arrayWorkshop, 'location').take(3);
+                    //let arrayWorkshopSort = _.sortBy(arrayWorkshop, [function (o) { return o.location; }]);
+                   self.nearbys = _.sortBy(self.nearbys, [function (o) { return o.location; }]);
+
+                });
+
+                var onKeyEnteredRegistration = geoQuery.on("key_entered", function (id, key, location, distance) {
+                    console.log("id: " + id + " key: " + key + " entered query at " + location + " (" + distance + " km from center)");
+                    let workshopLocation = {
+                        id: id,
+                        key: key,
+                        location: location
+                    }
+                    arrayWorkshop.push(workshopLocation);
+                    self.showResultSearch = true;
+                    self.workshopRef.child(id).on("value", function (snapshot) {
                         if (snapshot != null) {
                             let workshop = snapshot.val();
-                            workshop.location = Math.round(arrayWorkshopSort[i].location);
+                            workshop.location = Math.round(location);
                             self.nearbys.push(workshop);
+
                         }
-                        console.log("findNearBy idWorkshop snapshot.val()  " + snapshot.val());
+                        //   console.log("findNearBy idWorkshop snapshot.val()  " + snapshot.val());
 
                     });
 
-                }
+                });
 
+                var onKeyExitedRegistration = geoQuery.on("key_exited", function (key, location, distance) {
+                    console.log(key + " exited query to " + location + " (" + distance + " km from center)");
+                });
+
+                var onKeyMovedRegistration = geoQuery.on("key_moved", function (key, location, distance) {
+                    console.log(key + " moved within query to " + location + " (" + distance + " km from center)");
+                });
             });
-
-            var onKeyEnteredRegistration = geoQuery.on("key_entered", function (id, key, location, distance) {
-                console.log("id: " + id + " key: " + key + " entered query at " + location + " (" + distance + " km from center)");
-                let workshopLocation = {
-                    id: id,
-                    key: key,
-                    location: location
-                }
-                arrayWorkshop.push(workshopLocation);
-                self.showResultSearch = true;
-
-            });
-
-            var onKeyExitedRegistration = geoQuery.on("key_exited", function (key, location, distance) {
-                console.log(key + " exited query to " + location + " (" + distance + " km from center)");
-            });
-
-            var onKeyMovedRegistration = geoQuery.on("key_moved", function (key, location, distance) {
-                console.log(key + " moved within query to " + location + " (" + distance + " km from center)");
-            });
-        });
+        } else {
+            self.showResultSearch = false;
+        }
     }
 }

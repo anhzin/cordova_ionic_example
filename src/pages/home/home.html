@@ -31,18 +31,21 @@
          <ion-tab tabIcon="water" tabTitle="Nearby" [root]="tabNearBy"></ion-tab>
           <ion-tab tabIcon="heart" tabTitle="Favorite" [root]="tabFavorite"></ion-tab>
     </ion-tabs>-->
+    
+    <!--<div *ngIf="showResultSearch == false">
+        <div id="map"></div>
+    </div>-->
+    
     <div *ngIf="showResultSearch == true" id="nearBy">
         <ion-list>
             <ion-item *ngFor="let item of nearbys" (click)="presentPopover(item.id)">
-                <ion-row>
+                <ion-row class="rowNearBy">
                     <ion-col width-60>{{ item.name }}</ion-col>
                     <ion-col width-40> at {{ item.location}} km</ion-col>
                 </ion-row>
             </ion-item>
         </ion-list>
     </div>
-    <!--<div *ngIf="showResultSearch == false">
-        <div id="map"></div>
-    </div>-->
+
     <div id="map"></div>
 </ion-content>
